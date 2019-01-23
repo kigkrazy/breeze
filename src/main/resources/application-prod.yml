@@ -1,0 +1,11 @@
+# 生产环境
+# 开发环境
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: org.mariadb.jdbc.Driver
+    druid:
+      first:  # 数据源1
+        url: jdbc:maria://127.0.0.1:3306/breeze-prod?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: 123456

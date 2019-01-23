@@ -1,0 +1,15 @@
+server:
+  port: 8080 #设置端口
+
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev # 引用对应环境的配置，logback-spring.xml也会有对应的环境日志配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
