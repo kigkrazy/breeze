@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BreezeRealm extends AuthorizingRealm {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BreezeRealm.class);
+    private static final Logger logger = LoggerFactory.getLogger(BreezeRealm.class);
 
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
