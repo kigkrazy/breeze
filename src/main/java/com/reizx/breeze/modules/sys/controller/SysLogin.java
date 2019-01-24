@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController(value = "/sys")
 public class SysLogin {
     private final static Logger logger = LoggerFactory.getLogger(SysLogin.class);
-    //12小时后过期
-    private final static int EXPIRE = 3600 * 12;
 
     @Autowired
     SysUserService  sysUserService;//用户信息
@@ -42,6 +40,6 @@ public class SysLogin {
 
         //生成token，并保存到数据库
         SysUserToken sysUserToken = sysUserTokenService.setByToken(sysUser.getUserId());
-        return R.ok().put("token", sysUserToken.getToken()).put("expire", EXPIRE);
+        return R.ok().put("token", sysUserToken.getToken()).put("expire", sysUserToken.getExpireTime());
     }
 }
