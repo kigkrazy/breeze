@@ -5,7 +5,7 @@ import com.reizx.breeze.modules.sys.entity.po.SysUser;
 
 public interface SysUserService extends IService<SysUser> {
     /**
-     * 删除用户
+     * 查询用户
      */
-    void deleteBatch(Long[] userIds);
+    SysUser queryByUsername(String username);
 }

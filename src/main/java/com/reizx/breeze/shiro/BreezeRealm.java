@@ -1,6 +1,9 @@
 package com.reizx.breeze.shiro;
 
 
+import cn.hutool.crypto.SecureUtil;
+import com.reizx.breeze.modules.sys.entity.po.SysUser;
+import com.reizx.breeze.modules.sys.service.SysUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -9,11 +12,14 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BreezeRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(BreezeRealm.class);
+    @Autowired
+    SysUserService sysUserService;
 
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
@@ -28,6 +34,7 @@ public class BreezeRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
         //权限认证
         return null;
     }
@@ -38,6 +45,8 @@ public class BreezeRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         //用户验证
+//        SysUser sysUser = sysUserService.queryByUsername(auth.get)
+
         return null;
     }
 }
