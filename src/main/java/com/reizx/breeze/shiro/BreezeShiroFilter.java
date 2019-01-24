@@ -1,6 +1,5 @@
 package com.reizx.breeze.shiro;
 
-import com.reizx.breeze.modules.sys.entity.po.SysUser;
 import com.reizx.breeze.modules.sys.service.SysUserService;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
