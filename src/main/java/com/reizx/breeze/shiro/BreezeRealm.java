@@ -20,7 +20,7 @@ public class BreezeRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        return true;
+        return token instanceof BreezeToken;
     }
 
     /**
