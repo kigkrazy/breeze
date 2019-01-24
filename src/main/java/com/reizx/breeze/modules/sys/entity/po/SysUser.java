@@ -22,11 +22,9 @@ public class SysUser {
     private Long userId;//用户ID
     @NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;//用户名
-
     @NotBlank(message="密码不能为空", groups = AddGroup.class)
     private String password;//密码
     private String salt;//盐，密码加密用的盐，避免密码泄露
-
     @NotBlank(message="邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
     @Email(message="邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
     private String email;//邮箱
@@ -34,7 +32,6 @@ public class SysUser {
     private Integer status;//状态  0：禁用   1：正常
     private Long createUserId;//创建者ID
     private Date createTime;//创建时间
-
     @TableField(exist=false)
     private List<Long> roleIdList;//角色ID列表
 
