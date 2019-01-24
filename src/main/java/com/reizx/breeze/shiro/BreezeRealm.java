@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 @Component
 public class BreezeRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(BreezeRealm.class);
