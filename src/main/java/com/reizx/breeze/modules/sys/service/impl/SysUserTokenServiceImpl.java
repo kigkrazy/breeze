@@ -13,4 +13,18 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     public SysUserToken queryByToken(String token) {
         return baseMapper.selectOne(new QueryWrapper<SysUserToken>().lambda().eq(SysUserToken::getToken, token));
     }
+
+    @Override
+    public SysUserToken setByToken(long userId) {
+        //判断是否生成过token
+        SysUserToken sysUserToken = this.getById(userId);
+        if (sysUserToken == null) {
+            //不存在
+        } else {
+            //存在
+        }
+
+
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.reizx.breeze.modules.sys.entity.po;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -20,10 +21,10 @@ import java.util.List;
 @TableName("sys_user_token")
 public class SysUserToken {
     @TableId(type = IdType.INPUT)
-    private Long userId;//用户ID
-    private String token;//token
-    private Date expireTime;//过期时间
-    private Date updateTime;//更新时间
+    private Long userId = 0L;//用户ID
+    private String token = "";//token
+    private Date expireTime = DateUtil.date();//过期时间
+    private Date updateTime = DateUtil.date();//更新时间
 
 
 }
