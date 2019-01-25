@@ -1,16 +1,16 @@
 package com.reizx.breeze.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.reizx.breeze.modules.sys.entity.po.SysUserToken;
+import com.reizx.breeze.modules.sys.entity.po.SysUserTokenPo;
 
-public interface SysUserTokenService extends IService<SysUserToken> {
+public interface SysUserTokenService extends IService<SysUserTokenPo> {
     /**
      * 查询用户
      *
      * @param token
      * @return
      */
-    SysUserToken queryByToken(String token);
+    SysUserTokenPo queryByToken(String token);
 
 
     /**
@@ -20,7 +20,7 @@ public interface SysUserTokenService extends IService<SysUserToken> {
      * @param userId
      * @return
      */
-    SysUserToken setToken(long userId);
+    SysUserTokenPo setToken(long userId);
 
 
     /**

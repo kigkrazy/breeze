@@ -1,6 +1,6 @@
 package com.reizx.breeze.modules.sys.controller;
 
-import com.reizx.breeze.modules.sys.entity.po.SysUser;
+import com.reizx.breeze.modules.sys.entity.po.SysUserPo;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 public abstract class SysAbstractController {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
-	protected SysUser getUser() {
-		return (SysUser) SecurityUtils.getSubject().getPrincipal();
+	protected SysUserPo getUser() {
+		return (SysUserPo) SecurityUtils.getSubject().getPrincipal();
 	}
 
 	protected Long getUserId() {

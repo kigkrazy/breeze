@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @TableName("sys_menu")
-public class SysMenu {
+public class SysMenuPo {
     @TableId
     private Long menuId;//菜单ID
     private Long parentId;//父菜单ID，一级菜单为0

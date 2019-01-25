@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 @TableName("sys_user")
-public class SysUser {
+public class SysUserPo {
     @TableId
     private Long userId;//用户ID
     @NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})

@@ -1,8 +1,8 @@
 package com.reizx.breeze.shiro;
 
 
-import com.reizx.breeze.modules.sys.entity.po.SysUser;
-import com.reizx.breeze.modules.sys.entity.po.SysUserToken;
+import com.reizx.breeze.modules.sys.entity.po.SysUserPo;
+import com.reizx.breeze.modules.sys.entity.po.SysUserTokenPo;
 import com.reizx.breeze.modules.sys.service.SysUserService;
 import com.reizx.breeze.modules.sys.service.SysUserTokenService;
 import org.apache.shiro.authc.*;
@@ -39,8 +39,8 @@ public class BreezeRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         //权限认证
-        SysUser sysUser = (SysUser)principals.getPrimaryPrincipal();
-        Long userId = sysUser.getUserId();
+        SysUserPo sysUserPo = (SysUserPo)principals.getPrimaryPrincipal();
+        Long userId = sysUserPo.getUserId();
         //用户权限列表
         Set<String> permsSet = sysUserService.getUserPermissions(userId);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -55,18 +55,18 @@ public class BreezeRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         //用户验证
-//        SysUser sysUser = sysUserService.queryByUsername(auth.get)
-        SysUserToken sysUserToken = sysUserTokenService.queryByToken((String) auth.getPrincipal());
+//        SysUserPo sysUserPo = sysUserService.queryByUsername(auth.get)
+        SysUserTokenPo sysUserTokenPo = sysUserTokenService.queryByToken((String) auth.getPrincipal());
         //token失效
-        if(sysUserToken == null || sysUserToken.getExpireTime().getTime() < System.currentTimeMillis()){
+        if(sysUserTokenPo == null || sysUserTokenPo.getExpireTime().getTime() < System.currentTimeMillis()){
             throw new IncorrectCredentialsException("token失效，请重新登录");
         }
         //查询用户信息
-        SysUser sysUser = sysUserService.getById(sysUserToken.getUserId());
+        SysUserPo sysUserPo = sysUserService.getById(sysUserTokenPo.getUserId());
         //判断账号状态
-        if(sysUser.getStatus() == 0){
+        if(sysUserPo.getStatus() == 0){
             throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
-        return new SimpleAuthenticationInfo(sysUser, sysUserToken.getToken(), getName());
+        return new SimpleAuthenticationInfo(sysUserPo, sysUserTokenPo.getToken(), getName());
     }
 }

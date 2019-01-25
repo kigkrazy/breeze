@@ -1,18 +1,18 @@
 package com.reizx.breeze.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.reizx.breeze.modules.sys.entity.po.SysUser;
+import com.reizx.breeze.modules.sys.entity.po.SysUserPo;
 
 import java.util.Set;
 
-public interface SysUserService extends IService<SysUser> {
+public interface SysUserService extends IService<SysUserPo> {
     /**
      * 查询用户
      *
      * @param username 用户名
      * @return
      */
-    SysUser queryByUsername(String username);
+    SysUserPo queryByUsername(String username);
 
 
     /**

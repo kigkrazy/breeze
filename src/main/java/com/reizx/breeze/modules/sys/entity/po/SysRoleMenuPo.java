@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * 角色与菜单对应关系
  */
 @TableName("sys_role_menu")
-public class SysRoleMenu {
+public class SysRoleMenuPo {
     @TableId
     private Long id;
     private Long roleId;//角色ID

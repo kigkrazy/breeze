@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.reizx.breeze.constant.Constant;
 import com.reizx.breeze.modules.sys.dao.SysUserDao;
 import com.reizx.breeze.modules.sys.dao.SysUserTokenDao;
-import com.reizx.breeze.modules.sys.entity.po.SysMenu;
-import com.reizx.breeze.modules.sys.entity.po.SysUser;
+import com.reizx.breeze.modules.sys.entity.po.SysMenuPo;
+import com.reizx.breeze.modules.sys.entity.po.SysUserPo;
 import com.reizx.breeze.modules.sys.service.SysMenuService;
 import com.reizx.breeze.modules.sys.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserPo> implements SysUserService {
     @Autowired
     SysUserTokenDao sysUserTokenDao;
     @Autowired
     SysMenuService sysMenuService;//菜单情况
 
     @Override
-    public SysUser queryByUsername(String username) {
-        return baseMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername, username));
+    public SysUserPo queryByUsername(String username) {
+        return baseMapper.selectOne(new QueryWrapper<SysUserPo>().lambda().eq(SysUserPo::getUsername, username));
     }
 
     @Override
@@ -45,9 +45,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUser> impleme
      * @return
      */
     private List<String> getSuperAdminPerms() {
-        List<SysMenu> menuList = sysMenuService.list(null);
+        List<SysMenuPo> menuList = sysMenuService.list(null);
         List<String> permissions = new ArrayList<>();
-        for(SysMenu menu : menuList){
+        for(SysMenuPo menu : menuList){
             permissions.add(menu.getPerms());
         }
         return permissions;

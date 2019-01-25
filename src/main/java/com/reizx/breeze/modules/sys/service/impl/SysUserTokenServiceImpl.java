@@ -6,45 +6,45 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.reizx.breeze.modules.sys.dao.SysUserTokenDao;
-import com.reizx.breeze.modules.sys.entity.po.SysUserToken;
+import com.reizx.breeze.modules.sys.entity.po.SysUserTokenPo;
 import com.reizx.breeze.modules.sys.service.SysUserTokenService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUserToken> implements SysUserTokenService {
+public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUserTokenPo> implements SysUserTokenService {
     //12小时后过期
     private final static int EXPIRE = 3600 * 12;
 
     @Override
-    public SysUserToken queryByToken(String token) {
-        return baseMapper.selectOne(new QueryWrapper<SysUserToken>().lambda().eq(SysUserToken::getToken, token));
+    public SysUserTokenPo queryByToken(String token) {
+        return baseMapper.selectOne(new QueryWrapper<SysUserTokenPo>().lambda().eq(SysUserTokenPo::getToken, token));
     }
 
     @Override
-    public SysUserToken setToken(long userId) {
+    public SysUserTokenPo setToken(long userId) {
         String token = IdUtil.simpleUUID();
         DateTime now = DateUtil.date();
         DateTime expireTime = DateUtil.offsetSecond(now, EXPIRE);
         //判断是否生成过token
-        SysUserToken sysUserToken = this.getById(userId);
-        if (sysUserToken == null) {
+        SysUserTokenPo sysUserTokenPo = this.getById(userId);
+        if (sysUserTokenPo == null) {
             //不存在
-            sysUserToken = new SysUserToken();
-            sysUserToken.setUserId(userId);
-            sysUserToken.setToken(token);
-            sysUserToken.setUpdateTime(now);
-            sysUserToken.setExpireTime(expireTime);
+            sysUserTokenPo = new SysUserTokenPo();
+            sysUserTokenPo.setUserId(userId);
+            sysUserTokenPo.setToken(token);
+            sysUserTokenPo.setUpdateTime(now);
+            sysUserTokenPo.setExpireTime(expireTime);
             //保存Token到数据库
-            this.save(sysUserToken);
+            this.save(sysUserTokenPo);
         } else {
             //存在
-            sysUserToken.setToken(token);
-            sysUserToken.setUpdateTime(now);
-            sysUserToken.setExpireTime(expireTime);
+            sysUserTokenPo.setToken(token);
+            sysUserTokenPo.setUpdateTime(now);
+            sysUserTokenPo.setExpireTime(expireTime);
             //更新token
-            this.updateById(sysUserToken);
+            this.updateById(sysUserTokenPo);
         }
-        return sysUserToken;
+        return sysUserTokenPo;
     }
 
     @Override
@@ -53,12 +53,12 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
         DateTime now = DateUtil.date();
         DateTime expire = DateUtil.offsetSecond(now, EXPIRE);
 
-        SysUserToken sysUserToken = new SysUserToken();
-        sysUserToken.setUserId(userId);
-        sysUserToken.setToken(token);
-        sysUserToken.setUpdateTime(now);
-        sysUserToken.setExpireTime(expire);
+        SysUserTokenPo sysUserTokenPo = new SysUserTokenPo();
+        sysUserTokenPo.setUserId(userId);
+        sysUserTokenPo.setToken(token);
+        sysUserTokenPo.setUpdateTime(now);
+        sysUserTokenPo.setExpireTime(expire);
         //更新
-        updateById(sysUserToken);
+        updateById(sysUserTokenPo);
     }
 }

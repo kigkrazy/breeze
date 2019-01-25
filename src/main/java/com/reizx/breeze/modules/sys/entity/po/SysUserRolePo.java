@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 @TableName("sys_user_role")
-public class SysUserRole {
+public class SysUserRolePo {
     @TableId
     private Long id;
     private Long userId;//用户ID

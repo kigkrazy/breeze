@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @TableName("sys_user_token")
-public class SysUserToken {
+public class SysUserTokenPo {
     @TableId(type = IdType.INPUT)
     private Long userId = 0L;//用户ID
     private String token = "";//token
