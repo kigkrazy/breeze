@@ -66,6 +66,7 @@ public class BreezeShiroConfig {
         Map<String, String> filterRuleMap = new HashMap<>();
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", BREEZE_SHIRO_FILTER);
+        filterRuleMap.put("/sys/login", "anon");//login
         // 访问401和404页面不通过我们的Filter
 //        filterRuleMap.put("/401", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);

@@ -51,9 +51,4 @@ public class SysLoginControllerSys extends SysAbstractController {
         sysUserTokenService.refreshToken(getUserId());
         return R.ok();
     }
-
-    @GetMapping(value = "/hello")
-    public R hello() {
-        return R.ok();
-    }
 }
