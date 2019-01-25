@@ -33,25 +33,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuPo> imple
     /**
      * 获取所有菜单列表
      */
-    private List<SysMenuPo> getAllMenuList(List<Long> menuIdList){
+    private List<SysMenuPo> getAllMenuList(List<Long> menuIdList) {
         //查询根菜单列表
         List<SysMenuPo> menuList = queryListParentId(0L, menuIdList);
         //递归获取子菜单
         getMenuTreeList(menuList, menuIdList);
-
         return menuList;
     }
 
     @Override
     public List<SysMenuPo> queryListParentId(Long parentId, List<Long> menuIdList) {
         List<SysMenuPo> menuList = queryListParentId(parentId);
-        if(menuIdList == null){
+        if (menuIdList == null) {
             return menuList;
         }
 
         List<SysMenuPo> userMenuList = new ArrayList<>();
-        for(SysMenuPo menu : menuList){
-            if(menuIdList.contains(menu.getMenuId())){
+        for (SysMenuPo menu : menuList) {
+            if (menuIdList.contains(menu.getMenuId())) {
                 userMenuList.add(menu);
             }
         }
@@ -66,17 +65,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuPo> imple
     /**
      * 递归
      */
-    private List<SysMenuPo> getMenuTreeList(List<SysMenuPo> menuList, List<Long> menuIdList){
+    private List<SysMenuPo> getMenuTreeList(List<SysMenuPo> menuList, List<Long> menuIdList) {
         List<SysMenuPo> subMenuList = new ArrayList<SysMenuPo>();
 
-        for(SysMenuPo entity : menuList){
+        for (SysMenuPo entity : menuList) {
             //目录
-            if(entity.getType() == MenuType.CATALOG.getValue()){
+            if (entity.getType() == MenuType.CATALOG.getValue()) {
                 entity.setList(getMenuTreeList(queryListParentId(entity.getMenuId(), menuIdList), menuIdList));
             }
             subMenuList.add(entity);
         }
-
         return subMenuList;
     }
 }
