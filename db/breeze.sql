@@ -11,7 +11,7 @@
  Target Server Version : 100210
  File Encoding         : 65001
 
- Date: 24/01/2019 17:46:17
+ Date: 25/01/2019 17:30:53
 */
 
 SET NAMES utf8mb4;
@@ -73,12 +73,18 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
   `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '角色名称',
-  `remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
-  `create_user_id` bigint(20) DEFAULT NULL COMMENT '创建者ID',
+  `remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '' COMMENT '备注',
+  `create_user_id` bigint(20) NOT NULL DEFAULT 1 COMMENT '创建者ID',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `role_name`(`role_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '角色' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '角色' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role` VALUES (1, '系统管理员', '', 1, '2019-01-25 08:05:48');
+INSERT INTO `sys_role` VALUES (2, 'breeze管理员', '', 1, '2019-01-25 08:06:14');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -91,8 +97,8 @@ CREATE TABLE `sys_role_menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_role_menu_menu`(`menu_id`) USING BTREE,
   INDEX `fk_role_id_role`(`role_id`) USING BTREE,
-  CONSTRAINT `fk_role_id_role` FOREIGN KEY (`role_id`) REFERENCES `breeze-prod`.`sys_role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_role_menu_menu` FOREIGN KEY (`menu_id`) REFERENCES `breeze-prod`.`sys_menu` (`menu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_role_id_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_role_menu_menu` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '角色与菜单对应关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -129,8 +135,8 @@ CREATE TABLE `sys_user_role`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_user_role_role`(`role_id`) USING BTREE,
   INDEX `fk_user_role_user`(`user_id`) USING BTREE,
-  CONSTRAINT `fk_user_role_role` FOREIGN KEY (`role_id`) REFERENCES `breeze-prod`.`sys_role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `breeze-prod`.`sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_user_role_role` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '用户与角色对应关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -144,7 +150,12 @@ CREATE TABLE `sys_user_token`  (
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `token`(`token`) USING BTREE,
-  CONSTRAINT `fk_user_token_user` FOREIGN KEY (`user_id`) REFERENCES `breeze-prod`.`sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_user_token_user` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '系统用户Token' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user_token
+-- ----------------------------
+INSERT INTO `sys_user_token` VALUES (1, 'f1e24de9e9a6484ebde521512a3d9a9b', '2019-01-25 23:15:25', '2019-01-25 11:15:25');
 
 SET FOREIGN_KEY_CHECKS = 1;
