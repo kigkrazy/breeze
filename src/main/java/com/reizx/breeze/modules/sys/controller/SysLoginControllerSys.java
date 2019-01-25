@@ -5,17 +5,20 @@ import com.reizx.breeze.modules.sys.entity.po.SysUserToken;
 import com.reizx.breeze.modules.sys.service.SysUserService;
 import com.reizx.breeze.modules.sys.service.SysUserTokenService;
 import com.reizx.breeze.utils.R;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController(value = "/sys")
-public class SysLogin {
-    private final static Logger logger = LoggerFactory.getLogger(SysLogin.class);
+@RestController
+@RequestMapping("/sys")
+public class SysLoginControllerSys extends SysAbstractController {
+    private final static Logger logger = LoggerFactory.getLogger(SysLoginControllerSys.class);
 
     @Autowired
     SysUserService  sysUserService;//用户信息
@@ -39,7 +42,18 @@ public class SysLogin {
         }
 
         //生成token，并保存到数据库
-        SysUserToken sysUserToken = sysUserTokenService.setByToken(sysUser.getUserId());
+        SysUserToken sysUserToken = sysUserTokenService.setToken(sysUser.getUserId());
         return R.ok().put("token", sysUserToken.getToken()).put("expire", sysUserToken.getExpireTime());
+    }
+
+    @GetMapping(value = "/logout")
+    public R logout() {
+        sysUserTokenService.refreshToken(getUserId());
+        return R.ok();
+    }
+
+    @GetMapping(value = "/hello")
+    public R hello() {
+        return R.ok();
     }
 }

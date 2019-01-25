@@ -49,16 +49,15 @@ public class BreezeShiroConfig {
      * @return ShiroFilterFactoryBean
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager securityManager, BreezeShiroFilter breezeShiroFilter) {
+    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put(BREEZE_SHIRO_FILTER, breezeShiroFilter);
+        filterMap.put(BREEZE_SHIRO_FILTER, new BreezeShiroFilter());
         factoryBean.setFilters(filterMap);
-
         factoryBean.setSecurityManager(securityManager);
-        factoryBean.setUnauthorizedUrl("/401");
+//        factoryBean.setUnauthorizedUrl("/401");//设置没有权限时候跳转
 
         /*
          * 自定义url规则
@@ -68,8 +67,7 @@ public class BreezeShiroConfig {
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", BREEZE_SHIRO_FILTER);
         // 访问401和404页面不通过我们的Filter
-        filterRuleMap.put("/sys/login", "anon");
-        filterRuleMap.put("/401", "anon");
+//        filterRuleMap.put("/401", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

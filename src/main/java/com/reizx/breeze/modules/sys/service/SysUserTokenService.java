@@ -20,5 +20,15 @@ public interface SysUserTokenService extends IService<SysUserToken> {
      * @param userId
      * @return
      */
-    SysUserToken setByToken(long userId);
+    SysUserToken setToken(long userId);
+
+
+    /**
+     * 刷新token，logout时候使用
+     * 如果不存在则生成并保存，存在则更新。
+     *
+     * @param userId
+     * @return
+     */
+    void refreshToken(long userId);
 }

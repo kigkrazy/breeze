@@ -21,7 +21,7 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
     }
 
     @Override
-    public SysUserToken setByToken(long userId) {
+    public SysUserToken setToken(long userId) {
         String token = IdUtil.simpleUUID();
         DateTime now = DateUtil.date();
         DateTime expireTime = DateUtil.offsetSecond(now, EXPIRE);
@@ -45,5 +45,20 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenDao, SysUse
             this.updateById(sysUserToken);
         }
         return sysUserToken;
+    }
+
+    @Override
+    public void refreshToken(long userId) {
+        String token = IdUtil.simpleUUID();
+        DateTime now = DateUtil.date();
+        DateTime expire = DateUtil.offsetSecond(now, EXPIRE);
+
+        SysUserToken sysUserToken = new SysUserToken();
+        sysUserToken.setUserId(userId);
+        sysUserToken.setToken(token);
+        sysUserToken.setUpdateTime(now);
+        sysUserToken.setExpireTime(expire);
+        //更新
+        updateById(sysUserToken);
     }
 }

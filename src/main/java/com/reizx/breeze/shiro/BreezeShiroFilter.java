@@ -1,29 +1,24 @@
 package com.reizx.breeze.shiro;
 
-import com.reizx.breeze.modules.sys.service.SysUserService;
+import com.reizx.breeze.common.exception.RRException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * shiro相关过滤器
  */
-@Component
+//此处不能使用注入形式，原因未知
+//@Component
 public class BreezeShiroFilter extends BasicHttpAuthenticationFilter {
     private static final Logger logger = LoggerFactory.getLogger(BreezeRealm.class);
-
-    @Autowired
-    SysUserService sysUserService;
 
     /**
      * 判断用户是否想要登入。
@@ -66,7 +61,7 @@ public class BreezeShiroFilter extends BasicHttpAuthenticationFilter {
             try {
                 executeLogin(request, response);
             } catch (Exception e) {
-                response401(request, response);
+                throw new RRException("用户认证失败");
             }
         }
         return true;
@@ -88,17 +83,5 @@ public class BreezeShiroFilter extends BasicHttpAuthenticationFilter {
             return false;
         }
         return super.preHandle(request, response);
-    }
-
-    /**
-     * 将非法请求跳转到 /401
-     */
-    private void response401(ServletRequest req, ServletResponse resp) {
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/401");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
     }
 }
