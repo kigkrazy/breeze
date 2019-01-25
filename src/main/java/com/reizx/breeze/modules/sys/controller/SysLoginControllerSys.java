@@ -5,7 +5,6 @@ import com.reizx.breeze.modules.sys.entity.po.SysUserToken;
 import com.reizx.breeze.modules.sys.service.SysUserService;
 import com.reizx.breeze.modules.sys.service.SysUserTokenService;
 import com.reizx.breeze.utils.R;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
