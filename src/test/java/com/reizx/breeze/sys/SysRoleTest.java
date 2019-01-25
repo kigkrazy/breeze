@@ -15,6 +15,6 @@ public class SysRoleTest {
     SysRoleService sysRoleService;
     @Test
     public void contextLoads() {
-        PageUtils.PageWrapper page = sysRoleService.queryPage(1, 10, "", 0L);
+        PageUtils.PageWrapper page = sysRoleService.queryPage(1, 1, "", 0L);
     }
 }
