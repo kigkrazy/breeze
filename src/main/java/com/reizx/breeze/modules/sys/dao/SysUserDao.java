@@ -10,7 +10,16 @@ import java.util.List;
 public interface SysUserDao extends BaseMapper<SysUserPo> {
     /**
      * 查询用户的所有权限
-     * @param userId  用户ID
+     *
+     * @param userId 用户ID
      */
     List<String> queryAllPermissions(Long userId);
+
+    /**
+     * 查询用户的所有菜单ID
+     *
+     * @param userId
+     * @return
+     */
+    List<Long> queryAllMenuId(Long userId);
 }

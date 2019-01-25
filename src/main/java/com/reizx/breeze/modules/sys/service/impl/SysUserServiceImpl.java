@@ -39,6 +39,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserPo> imple
         return parsePermissions(permissions);
     }
 
+    @Override
+    public List<Long> queryAllMenuId(Long userId) {
+        return baseMapper.queryAllMenuId(userId);
+    }
+
     /**
      * 获取所有权限
      *

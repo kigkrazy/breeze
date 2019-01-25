@@ -3,6 +3,7 @@ package com.reizx.breeze.modules.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.reizx.breeze.modules.sys.entity.po.SysUserPo;
 
+import java.util.List;
 import java.util.Set;
 
 public interface SysUserService extends IService<SysUserPo> {
@@ -22,4 +23,12 @@ public interface SysUserService extends IService<SysUserPo> {
      * @return
      */
     Set<String> getUserPermissions(long userId);
+
+    /**
+     * 查询用户的所有菜单ID
+     * @param userId 用户ID
+     * @return
+     */
+    List<Long> queryAllMenuId(Long userId);
+
 }
