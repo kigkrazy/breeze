@@ -7,12 +7,15 @@ import com.reizx.breeze.modules.sys.service.SysUserService;
 import com.reizx.breeze.modules.sys.service.SysUserTokenService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class BreezeRealm extends AuthorizingRealm {
@@ -35,13 +38,14 @@ public class BreezeRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-//        //权限认证
-//        SysUser sysUser = (SysUser)principals.getPrimaryPrincipal();
-//        Long userId = sysUser.getUserId();
-//        //用户权限列表
-//        Set<String> permsSet = sysUserTokenService.getUserPermissions(userId);
-
-        return null;
+        //权限认证
+        SysUser sysUser = (SysUser)principals.getPrimaryPrincipal();
+        Long userId = sysUser.getUserId();
+        //用户权限列表
+        Set<String> permsSet = sysUserService.getUserPermissions(userId);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setStringPermissions(permsSet);
+        return info;
     }
 
     /**
